@@ -21,3 +21,11 @@ Choose one of the following:
 2. Pre-built Modules (Not Tested):
    - PCB0100 2 Channel Infrared Transmitter ([Buy Here](https://www.aliexpress.com/item/32860595867.html))
    - IR Infrared Transmitter Module IR Digital 38khz ([Buy Here](https://www.aliexpress.com/item/1005006385368806.html))
+
+## Diagrams
+
+### Schematic diagram
+![Schemait diagram](img/esp8266-Electra-AC_schem.png)
+
+### Breadbord layout
+![Breadbord layout](img/esp8266-Electra-AC_bb.png)
