@@ -1,0 +1,94 @@
+# See https://esphome.io/components/climate/climate_ir.html for supported units
+#  - platform: coolix           # Compatible with Electra AC - Remore RC08C 
+#  - platform: fujitsu_general  # Compatible with Fujitsu AC - Remote AR-RAH2E
+#  - platform: zhlt01           # Compatible with Tornado AC - Remore ZH/EZ-01 
+substitutions:
+  device_name: "hadar-ac-remote"
+  friendly_name: "hadar-ac-remote"
+  device_description: "Hadar Tornado AC"
+  room_name: Hadar
+  climate_platform: zhlt01
+
+
+esphome:
+  name: ${device_name}
+  comment: ${device_description}  
+  friendly_name: ${friendly_name}
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+  level: DEBUG
+  
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+    
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${friendly_name}
+    password: !secret ap_password
+
+captive_portal:
+
+# On the ESP8266 D1 mini the sensor is connected to GPIO0 (D3) 
+# AM2302 Temperature and Humidity sensor is connected to GPIO0 (D3)
+sensor:
+  - platform: dht
+    pin: GPIO0
+    model: AM2302
+    temperature:
+      name: "${room_name} room Temperature"
+      id: ${room_name}_temperature
+      accuracy_decimals: 1
+    humidity:
+      name: "${room_name} room  Humidity"
+      id: ${room_name}_humidity
+      accuracy_decimals: 1
+    update_interval: 60s
+
+# Simple Reciver KY022 connected to GPIO14 (D5) or GPIO GPIO4 (D2)
+remote_receiver:
+  id: ac_ir_reciver
+  tolerance: 25%
+  pin:
+    inverted: true
+#    number: GPIO14 
+    number: GPIO4 
+#  dump: all
+
+
+# Simple Transmiter connected to DPIO13 (D7) or GPIO5 (D1)
+# 2nd option instead of using a resistor, transistor, and IR LED, you can use PCB0100 
+# This configuration is for the PCB0100
+remote_transmitter:
+  id: ac_ir_transmit
+  pin: 
+#    number: GPIO13
+    number: GPIO5
+    inverted: False
+  carrier_duty_percent: 50%
+
+climate:
+  - platform: ${climate_platform}
+    sensor: ${room_name}_temperature
+    name: "${room_name} AC Climate Control"
+    supports_heat: True
+    supports_cool: True
+    receiver_id: ac_ir_reciver  
+    transmitter_id: ac_ir_transmit    
+    visual: 
+      max_temperature: 30
+      min_temperature: 17  
