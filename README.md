@@ -1,6 +1,6 @@
 # ESP8266-Electra-AC-RC08C
 
-This project enables control of Electra AC units that use the RC08C IR remote through Home Assistant (HA). Unlike traditional universal remote solutions like Broadlink, this project provides feedback and status updates to HA even when the air conditioner is operated using the traditional remote.
+This project enables control of AC units (Electra, Tornado, Fujitsu) IR remote through Home Assistant (HA). Unlike traditional universal remote solutions like Broadlink, this project provides feedback and status updates to HA even when the air conditioner is operated using the traditional remote.
 
 ## Hardware Requirements
 
@@ -18,9 +18,8 @@ Choose one of the following:
    - S9014 Transistor (NPN)
    - 220Ω Resistor
 
-2. Pre-built Modules (Not Tested):
+2. Pre-built Modules (Tested & Working):
    - PCB0100 2 Channel Infrared Transmitter ([Buy Here](https://www.aliexpress.com/item/32860595867.html))
-   - IR Infrared Transmitter Module IR Digital 38khz ([Buy Here](https://www.aliexpress.com/item/1005006385368806.html))
 
 ## Diagrams
 
